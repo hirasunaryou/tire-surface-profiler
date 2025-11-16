@@ -10,24 +10,38 @@ This repo extracts a narrow 12-o'clock slice from GLB meshes and builds an axial
 
 ## インストール / Installation
 
-```bash
-# macOS / Linux
-python -m venv .venv
-source .venv/bin/activate
+1. **Create a virtual environment / 仮想環境を作成**
 
-# Windows PowerShell
-python -m venv .venv
-.venv\\Scripts\\Activate.ps1
+   ```bash
+   # macOS / Linux / Windows PowerShell / Windows CMD (same command)
+   python -m venv .venv
+   # Windows で `py -3 -m venv .venv` でも可
+   ```
 
-# 共通 / shared
-python -m pip install --upgrade pip
-pip install -r requirements.txt      # installs Open3D, pandas, JupyterLab, etc.
-pip install -e .                     # exposes the `tireprof` CLI + notebooks imports
-```
+2. **Activate it per OS / OS ごとのアクティベーション**
+
+   ```bash
+   # macOS / Linux
+   source .venv/bin/activate
+
+   # Windows PowerShell
+   .venv\\Scripts\\Activate.ps1
+
+   # Windows コマンドプロンプト
+   .venv\\Scripts\\activate.bat
+   ```
+
+3. **Install dependencies / 依存関係をインストール**
+
+   ```bash
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt      # Open3D, pandas, jupyter, jupyterlab, etc.
+   pip install -e .                     # exposes the `tireprof` CLI + notebooks imports
+   ```
 
 > **Note / メモ**
 > * Windows wheels for Open3D currently start at 0.19.0, so the relaxed constraint (`open3d>=0.18`) keeps installation possible on Windows 11 while allowing 0.18.x on macOS/Linux.
-> * VS Code の Notebooks を利用する場合も、上記 `pip install -r requirements.txt` に `jupyter` / `jupyterlab` が含まれているため、追加インストールは不要です。
+> * VS Code の Notebooks を利用する場合も、上記 `pip install -r requirements.txt` に `jupyter` / `jupyterlab` / `ipywidgets` が含まれているため、追加インストールは不要です。
 > * If you prefer a global install, run the `pip install -e .` step inside the VS Code / Jupyter environment you will actually use so that the notebooks can import `tire_profiler` without extra `sys.path` tweaks.
 
 ## クイックスタート / Quick start
