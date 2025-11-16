@@ -28,11 +28,27 @@ def fit_cylinder(
 ) -> CylinderModel:
     """Fit a cylinder model to the provided point cloud."""
     cyl = Cylinder()
-    center, axis_dir, radius, inliers = cyl.fit(
-        points,
-        threshold=threshold,
-        maxIteration=max_iterations,
-    )
+
+    def _try_fit():
+        attempts = [
+            ((points, threshold, max_iterations), {}),
+            ((points,), {"threshold": threshold, "maxIteration": max_iterations}),
+            ((points,), {"threshold": threshold, "maxIterations": max_iterations}),
+            ((points,), {"thresh": threshold, "maxIteration": max_iterations}),
+            ((points,), {"thresh": threshold, "maxIterations": max_iterations}),
+        ]
+
+        last_err: TypeError | None = None
+        for args, kwargs in attempts:
+            try:
+                return cyl.fit(*args, **kwargs)
+            except TypeError as exc:  # pragma: no cover - depends on pyransac3d build
+                last_err = exc
+                continue
+
+        raise last_err if last_err else TypeError("Cylinder.fit signature mismatch")
+
+    center, axis_dir, radius, inliers = _try_fit()
 
     if radius is None or np.isnan(radius):
         raise CylinderFitError("Cylinder RANSAC did not converge")
