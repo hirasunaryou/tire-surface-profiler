@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tire-rimline-profiler"
+version = "0.1.0"
+description = "Tire rim-line zero profiling toolkit"
+authors = [{name = "OpenAI"}]
+license = {text = "MIT"}
+dependencies = [
+    "open3d==0.18.0",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "matplotlib>=3.7",
+    "pyransac3d>=0.6",
+    "scipy>=1.11",
+]
+
+[project.scripts]
+tireprof = "tire_profiler.cli:main"
